@@ -1,6 +1,11 @@
-﻿cmake_minimum_required(VERSION 3.5)
+﻿cmake_minimum_required(VERSION 3.10)
 
 project(hwinfo VERSION 1.0.0 LANGUAGES CXX)
+
+set(HWINFO_VERSION ${PROJECT_VERSION} PARENT_SCOPE) # To get hwinfo version from GLib.
+set(HWINFO_VERSION_MAJOR ${PROJECT_VERSION_MAJOR} PARENT_SCOPE) # same ^
+set(HWINFO_VERSION_MINOR ${PROJECT_VERSION_MINOR} PARENT_SCOPE) # same ^
+set(HWINFO_VERSION_PATCH ${PROJECT_VERSION_PATCH} PARENT_SCOPE) # same ^
 
 if (WIN32)
     add_definitions(-DWIN32)
@@ -33,8 +38,8 @@ include(GNUInstallDirs)
 
 string(COMPARE EQUAL "${CMAKE_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}" PROJECT_IS_TOP_LEVEL)
 
-option(HWINFO_SHARED "Shared build" ON)
-option(HWINFO_STATIC "Static build" OFF)
+option(HWINFO_SHARED "Shared build" OFF) # was on
+option(HWINFO_STATIC "Static build" ON) # was off
 
 
 option(BUILD_EXAMPLES "Build example program" ${PROJECT_IS_TOP_LEVEL})
@@ -42,18 +47,18 @@ option(BUILD_TESTING  "Build test program" ${PROJECT_IS_TOP_LEVEL})
 
 # Components
 option(HWINFO_OS "Enable OS information" ON)
-option(HWINFO_MAINBOARD "Enable mainboard information" ON)
+option(HWINFO_MAINBOARD "Enable mainboard information" OFF) # was ON
 option(HWINFO_CPU "Enable CPU information" ON)
-option(HWINFO_DISK "Enable disk information" ON)
+option(HWINFO_DISK "Enable disk information" OFF) # was ON
 option(HWINFO_RAM "Enable RAM information" ON)
 option(HWINFO_GPU "Enable GPU information" ON)
 option(HWINFO_GPU_OPENCL "Enable OpenCL for more GPU information" OFF)
-option(HWINFO_BATTERY "Enable battery information" ON)
+option(HWINFO_BATTERY "Enable battery information" OFF) # was ON
 option(HWINFO_NETWORK "Enable network information" ON)
 
 if(NOT HWINFO_STATIC AND HWINFO_SHARED)
   set(HWINFO_BUILD SHARED)
-else(HWINFO_STATIC)
+elseif(HWINFO_STATIC)
   set(HWINFO_BUILD STATIC)
 endif()
 
