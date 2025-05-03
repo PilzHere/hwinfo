@@ -1,4 +1,4 @@
-﻿cmake_minimum_required(VERSION 3.5)
+﻿cmake_minimum_required(VERSION 3.10)
 
 project(hwinfo VERSION 1.0.0 LANGUAGES CXX)
 
@@ -58,7 +58,7 @@ option(HWINFO_NETWORK "Enable network information" ON)
 
 if(NOT HWINFO_STATIC AND HWINFO_SHARED)
   set(HWINFO_BUILD SHARED)
-else(HWINFO_STATIC)
+elseif(HWINFO_STATIC)
   set(HWINFO_BUILD STATIC)
 endif()
 
